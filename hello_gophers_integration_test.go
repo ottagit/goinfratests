@@ -53,3 +53,15 @@ func createDbOpts(t *testing.T, terraformDir string) *terraform.Options {
 		},
 	}
 }
+
+func createHelloOpts(dbOpts *terraform.Options, terraformDir string) *terraform.Options {
+	return &terraform.Options{
+		TerraformDir: terraformDir,
+
+		Vars: map[string]interface{}{
+			"db_remote_state_bucket": dbOpts.BackendConfig["bucket"],
+			"db_remote_state_key":    dbOpts.BackendConfig["key"],
+			"environment":            dbOpts.Vars["db_name"],
+		},
+	}
+}
