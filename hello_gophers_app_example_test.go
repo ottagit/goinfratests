@@ -30,7 +30,8 @@ func TestHelloGophersAppExample(t *testing.T) {
 	// Clean up everything after the test
 	defer terraform.Destroy(t, opts)
 	terraform.InitAndApply(t, opts)
-
+	// Return the output of the given name or fail the
+	// test if the output does not exist or is empty
 	albDnsName := terraform.OutputRequired(t, opts, "alb_dns_name")
 	url := fmt.Sprintf("http://%s", albDnsName)
 
